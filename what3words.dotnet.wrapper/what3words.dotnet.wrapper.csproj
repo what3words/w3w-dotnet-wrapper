@@ -26,7 +26,7 @@ To obtain an API key, please visit https://what3words.com/select-plan and sign u
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\Downloads\ic_launcher (3)\web_hi_res_512.png">
+    <None Include="web_hi_res_512.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
