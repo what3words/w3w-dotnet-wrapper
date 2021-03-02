@@ -1,53 +1,60 @@
 ﻿using Refit;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
-using what3words.dotnet.wrapper;
+using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
     public class ConvertTo3WARequest {
+        public class ConvertTo3WAParams
+        {
+            [AliasAs("coordinates")]
+            public string Coordinates { get; set; }
+            [AliasAs("language")]
+            public string Language { get; set; }
+        }
+
         private What3WordsV3 api;
-        private string coordinates;
-        private string language;
+        private ConvertTo3WAParams queryParams;
 
         public ConvertTo3WARequest(What3WordsV3 api)
         {
             this.api = api;
+            this.queryParams = new ConvertTo3WAParams();
         }
 
-        public ConvertTo3WARequest Coordinates(double lat, double lng)
+        public ConvertTo3WARequest Coordinates(Coordinates coordinates)
         {
-            this.coordinates = lat + "," + lng;
+            queryParams.Coordinates = coordinates.Lat + "," + coordinates.Lng;
             return this;
         }
 
         public ConvertTo3WARequest Language(string language)
         {
-            this.language = language;
+            queryParams.Language = language;
             return this;
         }
 
-        public async Task<ConvertTo3WA> RequestAsync()
+        public async Task<APIResponse<Address>> RequestAsync()
         {
             try
             {
-                return await api.request.ConvertTo3WA(coordinates);
+                return new APIResponse<Address>(await api.request.ConvertTo3WA(queryParams));
             }
-            catch (ApiException e)
+            catch (Refit.ApiException e)
             {
-                return await e.GetContentAsAsync<ConvertTo3WA>();
+                var apiException = await e.GetContentAsAsync<response.ApiException>();
+                return new APIResponse<Address>(apiException.Error);
+            }
+            catch (Exception e)
+            {
+                var error = new APIError();
+                error.Code = What3WordsError.NetworkError.ToString();
+                error.Message = e.Message;
+                return new APIResponse<Address>(error);
             }
         }
     }
-}
-
-
-
-public interface IW3WRequests
-{
-    [Get("/convert-to-3wa?coordinates={coordinates}")]
-    Task<ConvertTo3WA> ConvertTo3WA(string coordinates);
 }

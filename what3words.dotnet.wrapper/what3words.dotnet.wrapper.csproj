@@ -1,11 +1,35 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>What3words</Authors>
+    <Product>What3words .NET Wrapper</Product>
+    <PackageId>what3words.dotnet.wrapper</PackageId>
+    <PackageVersion>1.0.0-beta</PackageVersion>
+    <Description>A .NET library to use the what3words v3 API.
+
+API methods are grouped into a single service object which can be centrally managed by a What3WordsV3 instance. It will act as a factory for all of the API endpoints and will automatically initialize them with your API key.
+
+To obtain an API key, please visit https://what3words.com/select-plan and sign up for an account.</Description>
+    <PackageIcon>web_hi_res_512.png</PackageIcon>
+    <RepositoryType></RepositoryType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RepositoryUrl>https://github.com/what3words/w3w-dotnet-wrapper</RepositoryUrl>
+    <PackageTags>What3words, Location, Maps</PackageTags>
+    <PackageProjectUrl>https://developer.what3words.com/public-api</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.0-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Refit" Version="6.0.24" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Downloads\ic_launcher (3)\web_hi_res_512.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

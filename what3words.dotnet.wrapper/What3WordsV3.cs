@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.request;
 
 namespace what3words.dotnet.wrapper
@@ -57,6 +58,26 @@ namespace what3words.dotnet.wrapper
         public ConvertTo3WARequest ConvertTo3WA()
         {
             return new ConvertTo3WARequest(this);
+        }
+
+        public ConvertToCoordinatesRequest ConvertToCoordinates(string words)
+        {
+            return new ConvertToCoordinatesRequest(this, words);
+        }
+
+        public AvailableLanguagesRequest AvailableLanguages()
+        {
+            return new AvailableLanguagesRequest(this);
+        }
+
+        public GridSectionRequest GridSection(Square square)
+        {
+            return new GridSectionRequest(this, square);
+        }
+
+        public AutosuggestRequest Autosuggest(string input)
+        {
+            return new AutosuggestRequest(this, input);
         }
     }
 }
