@@ -55,9 +55,9 @@ namespace what3words.dotnet.wrapper
                 + (Environment.OSVersion) + ")";
         }
 
-        public ConvertTo3WARequest ConvertTo3WA()
+        public ConvertTo3WARequest ConvertTo3WA(Coordinates coordinates)
         {
-            return new ConvertTo3WARequest(this);
+            return new ConvertTo3WARequest(this, coordinates);
         }
 
         public ConvertToCoordinatesRequest ConvertToCoordinates(string words)

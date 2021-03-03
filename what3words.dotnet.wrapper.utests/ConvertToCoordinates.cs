@@ -12,7 +12,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3("TCRPZKEE");
+            api = new What3WordsV3("YOUR_API_KEY_HERE");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task ConvertToCoordinates_InvalidKey()
         {
-            var api = new What3WordsV3("TCRPZKEES");
+            var api = new What3WordsV3("XXXXXXXX");
             var result = await api.ConvertToCoordinates("blame.deflection.hills")
                  .RequestAsync();
             Assert.IsFalse(result.IsSuccessful);

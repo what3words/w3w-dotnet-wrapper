@@ -19,16 +19,11 @@ namespace what3words.dotnet.wrapper.request
         private What3WordsV3 api;
         private ConvertTo3WAParams queryParams;
 
-        public ConvertTo3WARequest(What3WordsV3 api)
+        public ConvertTo3WARequest(What3WordsV3 api, Coordinates coordinates)
         {
             this.api = api;
-            this.queryParams = new ConvertTo3WAParams();
-        }
-
-        public ConvertTo3WARequest Coordinates(Coordinates coordinates)
-        {
+            queryParams = new ConvertTo3WAParams();
             queryParams.Coordinates = coordinates.Lat + "," + coordinates.Lng;
-            return this;
         }
 
         public ConvertTo3WARequest Language(string language)

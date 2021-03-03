@@ -14,7 +14,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp] 
         public void Setup()
         {
-            api = new What3WordsV3("TCRPZKEE");
+            api = new What3WordsV3("YOUR_API_KEY_HERE");
         }
 
         [Test]

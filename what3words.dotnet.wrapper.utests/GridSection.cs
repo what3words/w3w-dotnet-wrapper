@@ -12,7 +12,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3("XXXXXXXX");
+            api = new What3WordsV3("YOUR_API_KEY_HERE");
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task GridSection_InvalidKey()
         {
-            var api = new What3WordsV3("XXXXXXXX");
+            var api = new What3WordsV3("YOUR_API_KEY_HERES");
             var result = await api.GridSection(new Square(new Coordinates(51.222011, 0.152311), new Coordinates(51.222609, 0.152898))).RequestAsync();
             Assert.IsFalse(result.IsSuccessful);
             Assert.AreEqual(What3WordsError.InvalidKey, result.Error.Error);

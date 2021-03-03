@@ -10,7 +10,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3("XXXXXXXX");
+            api = new What3WordsV3("YOUR_API_KEY_HERE");
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task ConvertTo3WA_InvalidKey()
         {
-            var api = new What3WordsV3("XXXXXXXX");
+            var api = new What3WordsV3("YOUR_API_KEY_HERES");
             var result = await api.AvailableLanguages().RequestAsync();
             Assert.IsFalse(result.IsSuccessful);
         }
