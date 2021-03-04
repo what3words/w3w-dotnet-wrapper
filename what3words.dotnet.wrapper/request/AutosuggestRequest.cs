@@ -1,13 +1,12 @@
 ﻿using Refit;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
-    public class AutosuggestRequest {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public class AutosuggestRequest : Request<AutoSuggest> {
         public class AutosuggestRequestParams
         {
             [AliasAs("input")]
@@ -211,33 +210,11 @@ namespace what3words.dotnet.wrapper.request
             return this;
         }
 
-        public async Task<APIResponse<AutoSuggest>> RequestAsync()
+        internal override Task<AutoSuggest> ApiRequest
         {
-            try
+            get
             {
-                return new APIResponse<AutoSuggest>(await api.request.AutoSuggest(queryParams));
-            }
-            catch (Refit.ApiException e)
-            {
-                var apiException = await e.GetContentAsAsync<response.ApiException>();
-                if (apiException != null)
-                {
-                    return new APIResponse<AutoSuggest>(apiException.Error);
-                }
-                else
-                {
-                    var error = new APIError();
-                    error.Code = What3WordsError.UnknownError.ToString();
-                    error.Message = e.Message;
-                    return new APIResponse<AutoSuggest>(error);
-                }
-            }
-            catch (Exception e)
-            {
-                var error = new APIError();
-                error.Code = What3WordsError.NetworkError.ToString();
-                error.Message = e.Message;
-                return new APIResponse<AutoSuggest>(error);
+                return api.request.AutoSuggest(queryParams);
             }
         }
     }

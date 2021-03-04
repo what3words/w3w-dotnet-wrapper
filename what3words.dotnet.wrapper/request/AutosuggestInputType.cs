@@ -1,11 +1,12 @@
-﻿public enum AutosuggestInputType {
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+public enum AutosuggestInputType {
     /**
      * Text typed by a user, e.g.'index.home.raf'. Default setting.
      * Expects exactly two dots and no whitespace in the input.
      */
     TEXT,
     /**
-     * JSON from Nuance VoCon&reg; Hybrid.
+     * JSON from Nuance VoConHybrid.
      * This should only be used with grammars provided by what3words ltd;
      * using other grammars will cause run-time exceptions.
      * Language detection is disabled, so lang must be set for non-English input.

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
-    public class AvailableLanguagesRequest
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public class AvailableLanguagesRequest : Request<AvailableLanguages>
     {
         private What3WordsV3 api;
 
@@ -13,23 +13,11 @@ namespace what3words.dotnet.wrapper.request
             this.api = api;
         }
 
-        public async Task<APIResponse<AvailableLanguages>> RequestAsync()
+        internal override Task<AvailableLanguages> ApiRequest
         {
-            try
+            get
             {
-                return new APIResponse<AvailableLanguages>(await api.request.AvailableLanguages());
-            }
-            catch (Refit.ApiException e)
-            {
-                var apiException = await e.GetContentAsAsync<ApiException>();
-                return new APIResponse<AvailableLanguages>(apiException.Error);
-            }
-            catch (Exception e)
-            {
-                var error = new APIError();
-                error.Code = What3WordsError.NetworkError.ToString();
-                error.Message = e.Message;
-                return new APIResponse<AvailableLanguages>(error);
+                return api.request.AvailableLanguages();
             }
         }
     }

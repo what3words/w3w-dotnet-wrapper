@@ -2,6 +2,7 @@
 
 namespace what3words.dotnet.wrapper.response
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class APIError
     {
         public string Code { get; set; }

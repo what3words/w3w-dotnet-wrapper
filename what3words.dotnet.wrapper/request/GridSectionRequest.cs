@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
-    public class GridSectionRequest
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public class GridSectionRequest : Request<GridSection>
     {
         private What3WordsV3 api;
         private string boundingBox;
@@ -17,23 +16,11 @@ namespace what3words.dotnet.wrapper.request
                      boundingBox.Northeast.Lat + "," + boundingBox.Northeast.Lng;
         }
 
-        public async Task<APIResponse<GridSection>> RequestAsync()
+        internal override Task<GridSection> ApiRequest
         {
-            try
+            get
             {
-                return new APIResponse<GridSection>(await api.request.GridSection(boundingBox));
-            }
-            catch (Refit.ApiException e)
-            {
-                var apiException = await e.GetContentAsAsync<ApiException>();
-                return new APIResponse<GridSection>(apiException.Error);
-            }
-            catch (Exception e)
-            {
-                var error = new APIError();
-                error.Code = What3WordsError.NetworkError.ToString();
-                error.Message = e.Message;
-                return new APIResponse<GridSection>(error);
+                return api.request.GridSection(boundingBox);
             }
         }
     }

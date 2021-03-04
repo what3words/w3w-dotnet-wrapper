@@ -1,13 +1,11 @@
 ﻿using Refit;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
-    public class ConvertTo3WARequest {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public class ConvertTo3WARequest : Request<Address> {
         public class ConvertTo3WAParams
         {
             [AliasAs("coordinates")]
@@ -32,23 +30,11 @@ namespace what3words.dotnet.wrapper.request
             return this;
         }
 
-        public async Task<APIResponse<Address>> RequestAsync()
+        internal override Task<Address> ApiRequest
         {
-            try
+            get
             {
-                return new APIResponse<Address>(await api.request.ConvertTo3WA(queryParams));
-            }
-            catch (Refit.ApiException e)
-            {
-                var apiException = await e.GetContentAsAsync<response.ApiException>();
-                return new APIResponse<Address>(apiException.Error);
-            }
-            catch (Exception e)
-            {
-                var error = new APIError();
-                error.Code = What3WordsError.NetworkError.ToString();
-                error.Message = e.Message;
-                return new APIResponse<Address>(error);
+                return api.request.ConvertTo3WA(queryParams);
             }
         }
     }

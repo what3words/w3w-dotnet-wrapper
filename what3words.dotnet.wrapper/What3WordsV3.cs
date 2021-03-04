@@ -8,6 +8,7 @@ using what3words.dotnet.wrapper.request;
 
 namespace what3words.dotnet.wrapper
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class What3WordsV3
     {
         private static string DEFAULT_ENDPOINT = "https://api.what3words.com/v3";

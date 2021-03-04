@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
 {
-    public class ConvertToCoordinatesRequest
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public class ConvertToCoordinatesRequest : Request<Address>
     {
         private What3WordsV3 api;
         private string words;
@@ -16,23 +15,11 @@ namespace what3words.dotnet.wrapper.request
             this.words = words;
         }
 
-        public async Task<APIResponse<Address>> RequestAsync()
+        internal override Task<Address> ApiRequest
         {
-            try
+            get
             {
-                return new APIResponse<Address>(await api.request.ConvertToCoordinates(words));
-            }
-            catch (Refit.ApiException e)
-            {
-                var exception = await e.GetContentAsAsync<ApiException>();
-                return new APIResponse<Address>(exception.Error);
-            }
-            catch (Exception e)
-            {
-                var error = new APIError();
-                error.Code = What3WordsError.NetworkError.ToString();
-                error.Message = e.Message;
-                return new APIResponse<Address>(error);
+                return api.request.ConvertToCoordinates(words);
             }
         }
     }
