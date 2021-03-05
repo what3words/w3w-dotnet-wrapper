@@ -16,13 +16,13 @@ See the what3words public API [documentation](https://docs.what3words.com/api/v3
 
 ## Usage
 
-**ConvertTo3WA()** - Convert a coordinate (latitude and longitude) to a 3 word address:
+- **ConvertTo3WA()** - Convert a coordinate (latitude and longitude) to a 3 word address:
 ```C#
 var wrapper = new What3WordsV3("YOUR_API_KEY_HERE");
 var result = await wrapper.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
 ```
 
-**ConvertToCoordinates()** - Convert a 3 word address to a coordinate (latitude and longitude):
+- **ConvertToCoordinates()** - Convert a 3 word address to a coordinate (latitude and longitude):
 ```C#
 var wrapper = new What3WordsV3("YOUR_API_KEY_HERE");
 var result = await wrapper.ConvertToCoordinates("filled.count.soap").RequestAsync();
