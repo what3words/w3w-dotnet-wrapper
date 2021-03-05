@@ -8,7 +8,7 @@ To obtain an API key, please visit [https://what3words.com/select-plan](https://
 
 ## Installation
 
-The artifact is available through NuGet Package https://www.nuget.org/packages/what3words.dotnet.wrapper/
+The artifact is available through NuGet Package [![NuGet version (what3words.dotnet.wrapper)](https://img.shields.io/nuget/v/what3words.dotnet.wrapper.svg?style=flat-square)](https://www.nuget.org/packages/what3words.dotnet.wrapper/)
 
 ## Documentation
 
