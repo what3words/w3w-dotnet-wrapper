@@ -4,8 +4,6 @@ An .NET library to use the [what3words v3 API](https://docs.what3words.com/api/v
 
 API methods are grouped into a single service object which can be centrally managed by a What3WordsV3 instance. It will act as a factory for all of the API endpoints and will automatically initialize them with your API key.
 
-To obtain an API key, please visit [https://what3words.com/select-plan](https://what3words.com/select-plan) and sign up for an account.
-
 ## Installation
 
 The artifact is available through NuGet Package [![NuGet version (what3words.dotnet.wrapper)](https://img.shields.io/nuget/v/what3words.dotnet.wrapper.svg?style=flat-square)](https://www.nuget.org/packages/what3words.dotnet.wrapper/)
@@ -16,10 +14,11 @@ See the what3words public API [documentation](https://docs.what3words.com/api/v3
 
 ## Setup
 
+To obtain an API key, please visit [https://what3words.com/select-plan](https://what3words.com/select-plan) and sign up for an account.
+
 ```C#
 var wrapper = new What3WordsV3("YOUR_API_KEY_HERE");
 ```
-To obtain an API key, please visit [https://what3words.com/select-plan](https://what3words.com/select-plan) and sign up for an account.
 
 If you run our Enterprise Suite API Server yourself, you may specify the URL to your own server like so:
 
