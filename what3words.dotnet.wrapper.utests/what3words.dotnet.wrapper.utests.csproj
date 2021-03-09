@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\what3words.dotnet.wrapper\what3words.dotnet.wrapper.csproj" />
+  </ItemGroup>
+
 </Project>

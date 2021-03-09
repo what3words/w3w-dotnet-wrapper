@@ -11,8 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="what3words.dotnet.wrapper" Version="1.0.0-alpha" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\what3words.dotnet.wrapper\what3words.dotnet.wrapper.csproj" />
   </ItemGroup>
 </Project>

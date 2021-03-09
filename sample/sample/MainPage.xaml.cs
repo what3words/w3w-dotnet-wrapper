@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using what3words.dotnet.wrapper;
 using what3words.dotnet.wrapper.models;
 using Xamarin.Forms;
@@ -54,7 +50,7 @@ namespace sample
             var latLong = EntryConvertTo3wa.Text.Replace(" ", "").Split(',').Where(x => x != "");
             if(double.TryParse(latLong.ElementAt(0),out var lat) && double.TryParse(latLong.ElementAt(1), out var lng))
             {
-                var convertTo3waResult = await api.ConvertTo3WA().Coordinates(new Coordinates(lat, lng)).RequestAsync();
+                var convertTo3waResult = await api.ConvertTo3WA(new Coordinates(lat, lng)).RequestAsync();
                 if(convertTo3waResult.IsSuccessful)
                 {
                     LabelConvertTo3wa.Text = "3 word address: " + convertTo3waResult.Data.Words;

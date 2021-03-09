@@ -17,22 +17,22 @@ namespace what3words.dotnet.wrapper
 
         public What3WordsV3(string apiKey)
         {
-            setupHttpClient(apiKey, DEFAULT_ENDPOINT, null, null, null);
+            setupHttpClient(apiKey, DEFAULT_ENDPOINT, null);
         }
 
         public What3WordsV3(string apiKey, string endpoint)
         {
-            setupHttpClient(apiKey, endpoint, null, null, null);
+            setupHttpClient(apiKey, endpoint, null);
         }
 
-        protected What3WordsV3(string apiKey, string endpoint, string packageName, string signature, Dictionary<string, string> headers)
+        protected What3WordsV3(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
-            setupHttpClient(apiKey, endpoint, packageName, signature, headers);
+            setupHttpClient(apiKey, endpoint, headers);
         }
 
         internal IW3WRequests request { get; set; }
 
-        private void setupHttpClient(string apiKey, string endpoint, string packageName, string signature, Dictionary<string, string> headers)
+        private void setupHttpClient(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
             var httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(endpoint);
@@ -52,7 +52,7 @@ namespace what3words.dotnet.wrapper
 
         private string getUserAgent()
         {
-            return "what3words-dotNet/" + (RuntimeInformation.FrameworkDescription) + "; "
+            return "what3words-dotNet/" + (GetType().Assembly.GetName().Version.ToString()) + " ("
                 + (Environment.OSVersion) + ")";
         }
 
