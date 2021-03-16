@@ -2,6 +2,7 @@
 using System.Linq;
 using what3words.dotnet.wrapper;
 using what3words.dotnet.wrapper.models;
+using what3words.dotnet.wrapper.response;
 using Xamarin.Forms;
 
 namespace sample
@@ -41,7 +42,15 @@ namespace sample
             }
             else
             {
-                LabelConvertToCoordinates.Text = convertToCoordinatesResult.Error.Code + " - " + convertToCoordinatesResult.Error.Message;
+                if (convertToCoordinatesResult.Error.Error == What3WordsError.BadClipToCountry)
+                { 
+                    // Invalid country clip is provided, example how to get error type.
+                    LabelConvertToCoordinates.Text = What3WordsError.BadClipToCountry + " - " + convertToCoordinatesResult.Error.Message;
+                } 
+                else
+                {
+                    LabelConvertToCoordinates.Text = convertToCoordinatesResult.Error.Code + " - " + convertToCoordinatesResult.Error.Message;
+                }
             }
         }
 

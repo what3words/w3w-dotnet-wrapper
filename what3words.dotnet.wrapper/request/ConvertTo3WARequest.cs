@@ -6,7 +6,7 @@ namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class ConvertTo3WARequest : Request<Address> {
-        public class ConvertTo3WAParams
+        public class ConvertTo3WAOptions
         {
             [AliasAs("coordinates")]
             public string Coordinates { get; set; }
@@ -15,18 +15,18 @@ namespace what3words.dotnet.wrapper.request
         }
 
         private What3WordsV3 api;
-        private ConvertTo3WAParams queryParams;
+        private ConvertTo3WAOptions options;
 
         public ConvertTo3WARequest(What3WordsV3 api, Coordinates coordinates)
         {
             this.api = api;
-            queryParams = new ConvertTo3WAParams();
-            queryParams.Coordinates = coordinates.Lat + "," + coordinates.Lng;
+            options = new ConvertTo3WAOptions();
+            options.Coordinates = coordinates.Lat + "," + coordinates.Lng;
         }
 
         public ConvertTo3WARequest Language(string language)
         {
-            queryParams.Language = language;
+            options.Language = language;
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace what3words.dotnet.wrapper.request
         {
             get
             {
-                return api.request.ConvertTo3WA(queryParams);
+                return api.request.ConvertTo3WA(options);
             }
         }
     }
