@@ -76,9 +76,19 @@ namespace what3words.dotnet.wrapper
             return new GridSectionRequest(this, square);
         }
 
-        public AutosuggestRequest Autosuggest(string input)
+        public AutosuggestRequest Autosuggest(string input, AutosuggestOptions options = null)
         {
-            return new AutosuggestRequest(this, input);
+            return new AutosuggestRequest(this, input, options);
+        }
+
+        public AutosuggestWithCoordinatesRequest AutosuggestWithCoordinates(string input, AutosuggestOptions options = null)
+        {
+            return new AutosuggestWithCoordinatesRequest(this, input, options);
+        }
+
+        public AutosuggestSelectionRequest AutosuggestSelection(string rawInput, string sourceApi, Suggestion seletedSuggestion, AutosuggestOptions options = null)
+        {
+            return new AutosuggestSelectionRequest(this, rawInput, sourceApi, seletedSuggestion, options);
         }
     }
 }

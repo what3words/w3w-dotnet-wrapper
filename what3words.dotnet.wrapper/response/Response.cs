@@ -23,4 +23,20 @@
 
         public bool IsSuccessful { get { return Data != null; } }
     }
+
+    public class APIResponse
+    {
+        public APIResponse()
+        {
+        }
+
+        public APIResponse(APIError error)
+        {
+            this.Error = error;
+        }
+
+        public APIError Error { get; private set; }
+
+        public bool IsSuccessful { get { return Error == null; } }
+    }
 }
