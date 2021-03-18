@@ -6,9 +6,13 @@
         public string NearestPlace { get; set; }
         public string Words { get; set; }
         public string Language { get; set; }
-
-        public int? DistanceToFocusKm { get; set; }
-        public int? Rank { get; set; }
+        public int DistanceToFocusKm { get; set; }
+        public int Rank { get; set; }
     }
 
+
+    public class SuggestionWithCoordinates : Suggestion
+    {
+        public Coordinates Coordinates { get; set; }
+    }
 }

@@ -42,9 +42,9 @@ var result = await wrapper.ConvertToCoordinates("filled.count.soap").RequestAsyn
 ```C#
 var result = await wrapper.Autosuggest("index.home.r", new AutosuggestOptions().SetFocus(51.502,-0.12345)).RequestAsync();
 ```
-- **GridSection()** - Returns a section of the 3m x 3m what3words grid for a bounding box.
+- **GridSection()** - Returns a section of the 3m x 3m what3words grid for a bounding box (Coordinats SW, Coordinates NE).
 ```C#
-var result = await wrapper.GridSection(new Square(new Coordinates(51.222011, 0.152311), new Coordinates(51.222609, 0.152898))).RequestAsync();
+var result = await wrapper.GridSection(new Coordinates(51.222011, 0.152311), new Coordinates(51.222609, 0.152898)).RequestAsync();
 ```
 
 - **AvailableLanguages()** - Retrieves a list all available 3 word address languages.
