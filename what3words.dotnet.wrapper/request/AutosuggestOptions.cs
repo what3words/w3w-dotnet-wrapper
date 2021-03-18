@@ -5,7 +5,7 @@ using what3words.dotnet.wrapper.models;
 namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class AutosuggestOptions
+    public class AutosuggestOptions 
     {
         [AliasAs("n-results")]
         public string NResults { get; private set; }
@@ -38,12 +38,12 @@ namespace what3words.dotnet.wrapper.request
         public string Language { get; private set; }
 
         /**
-       * <summary>Set the number of AutoSuggest results to return. A maximum of 100 results can be specified, if a number greater than this is requested,
-       * this will be truncated to the maximum. The default is 3</summary>
-       *
-       * <param name="n">the number of AutoSuggest results to return</param>
-       * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
-       */
+        * <summary>Set the number of AutoSuggest results to return. A maximum of 100 results can be specified, if a number greater than this is requested,
+        * this will be truncated to the maximum. The default is 3</summary>
+        *
+        * <param name="n">the number of AutoSuggest results to return</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        */
         public AutosuggestOptions SetNResults(int n)
         {
             NResults = n.ToString();
@@ -57,7 +57,7 @@ namespace what3words.dotnet.wrapper.request
          * which will return just one focussed result and the rest unfocussed.</summary>
          *
          * <param name="n">number of results within the results set which will have a focus</param>
-         * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+         * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
          */
         public AutosuggestOptions SetNFocusResults(int n)
         {
@@ -68,9 +68,9 @@ namespace what3words.dotnet.wrapper.request
         /**
         * <summary>For power users, used to specify voice input mode. Can be <see cref="AutosuggestInputType.TEXT"/> (default), <see cref="AutosuggestInputType.VOCON_HYBRID"/>
         * or <see cref="AutosuggestInputType.NMDP_ASR"/>. See voice recognition section within the developer docs for more details https://docs.what3words.com/api/v3/#voice.
-        *</summary>
+        * </summary>
         * <param name="type">type the AutosuggestInputType</param>
-        * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
         */
         public AutosuggestOptions SetInputType(AutosuggestInputType type)
         {
@@ -99,11 +99,11 @@ namespace what3words.dotnet.wrapper.request
         }
 
         /**
-        *<summary>This is a location, specified as a latitude (often where the user making the query is). If specified, the results will be weighted to
+        * <summary>This is a location, specified as a latitude (often where the user making the query is). If specified, the results will be weighted to
         * give preference to those near the focus. For convenience, longitude is allowed to wrap around the 180 line, so 361 is equivalent to 1.</summary>
         *
-        *<param name="coordinates">the focus to use</param>
-        *<returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        * <param name="coordinates">the focus to use</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
         */
         public AutosuggestOptions SetFocus(Coordinates coordinates)
         {
@@ -112,13 +112,13 @@ namespace what3words.dotnet.wrapper.request
         }
 
         /**
-         * <summary>For normal text input, specifies a fallback language, which will help guide AutoSuggest if the input is particularly messy. If specified,
-         * this parameter must be a supported 3 word address language as an ISO 639-1 2 letter code. For voice input (see voice section),
-         * language must always be specified.</summary>
-         *
-         * <param name="language">the fallback language</param>
-         * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
-         */
+        * <summary>For normal text input, specifies a fallback language, which will help guide AutoSuggest if the input is particularly messy. If specified,
+        * this parameter must be a supported 3 word address language as an ISO 639-1 2 letter code. For voice input (see voice section),
+        * language must always be specified.</summary>
+        *
+        * <param name="language">the fallback language</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
+        */
         public AutosuggestOptions SetLanguage(string language)
         {
             Language = language;
@@ -137,7 +137,7 @@ namespace what3words.dotnet.wrapper.request
         *
         * <param name="centre">the centre of the circle</param>
         * <param name="radius">the radius of the circle in kilometres</param> 
-        * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
         */
         public AutosuggestOptions SetClipToCircle(Coordinates centre, double radius)
         {
@@ -146,13 +146,13 @@ namespace what3words.dotnet.wrapper.request
         }
 
         /**
-      * <summary>Restrict autosuggest results to a polygon, specified by a collection of <see cref="Coordinates"/>. The polygon should be closed,
-      * i.e. the first element should be repeated as the last element; also the list should contain at least 4 entries. The API is currently limited to
-      * accepting up to 25 pairs.</summary>
-      *
-      * <param name="polygon">the polygon to clip results too</param>
-      * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
-      */
+        * <summary>Restrict autosuggest results to a polygon, specified by a collection of <see cref="Coordinates"/>. The polygon should be closed,
+        * i.e. the first element should be repeated as the last element; also the list should contain at least 4 entries. The API is currently limited to
+        * accepting up to 25 pairs.</summary>
+        *
+        * <param name="polygon">the polygon to clip results too</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
+        */
         public AutosuggestOptions SetClipToPolygon(List<Coordinates> polygon)
         {
             List<string> coordinatesList = new List<string>();
@@ -166,15 +166,16 @@ namespace what3words.dotnet.wrapper.request
         }
 
         /**
-        * <summary>Restrict autosuggest results to a BoundingBox/Square.</summary>
+        * <summary>Restrict autosuggest results to a Bounding Box (2 coners, South West and North East.</summary>
         *
-        * <param name="boundingBox">Square to clip results too</param>
-        * <returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        * <param name="southWest">South West corner of the bounding box to clip results too</param>
+        * <param name="northEast">North East corner of the bounding box to clip results too</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
         */
-        public AutosuggestOptions SetClipToBoundingBox(Square boundingBox)
+        public AutosuggestOptions SetClipToBoundingBox(Coordinates southWest, Coordinates northEast)
         {
-            ClipToBoundingBox = boundingBox.Southwest.Lat + "," + boundingBox.Southwest.Lng + "," +
-                    boundingBox.Northeast.Lat + "," + boundingBox.Northeast.Lng;
+            ClipToBoundingBox = southWest.Lat + "," + southWest.Lng + "," +
+                    northEast.Lat + "," + northEast.Lng;
             return this;
         }
 
@@ -185,8 +186,8 @@ namespace what3words.dotnet.wrapper.request
         * country codes. Entries must be two a-z letters. WARNING: If the two-letter code does not correspond to a country, there is no error: API simply returns no results.
         * </summary>
         *
-        *<param name="countryCodes">countries to clip results too</param>
-        *<returns>a <see cref="AutosuggestOptions"/> instance suitable for invoking a autosuggest API request.</returns>
+        * <param name="countryCodes">countries to clip results too</param>
+        * <returns>a <see cref="AutosuggestOptions"/> instance to continue adding options to your autosuggest request.</returns>
         */
         public AutosuggestOptions SetClipToCountry(List<string> countryCodes)
         {

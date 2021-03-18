@@ -9,11 +9,11 @@ namespace what3words.dotnet.wrapper.request
         private What3WordsV3 api;
         private string boundingBox;
 
-        public GridSectionRequest(What3WordsV3 api, Square boundingBox)
+        public GridSectionRequest(What3WordsV3 api, Coordinates southWest, Coordinates northEast)
         {
             this.api = api;
-            this.boundingBox = boundingBox.Southwest.Lat + "," + boundingBox.Southwest.Lng + "," +
-                     boundingBox.Northeast.Lat + "," + boundingBox.Northeast.Lng;
+            this.boundingBox = southWest.Lat + "," + southWest.Lng + "," +
+                     northEast.Lat + "," + northEast.Lng;
         }
 
         internal override Task<GridSection> ApiRequest

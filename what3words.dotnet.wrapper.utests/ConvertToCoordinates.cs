@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.response;
 
@@ -12,7 +13,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3("YOUR_API_KEY_HERE");
+            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"));
         }
 
         [Test]

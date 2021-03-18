@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp] 
         public void Setup()
         {
-            api = new What3WordsV3("YOUR_API_KEY_HERE");
+            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"));
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToBoundingBox()
         {
-            var options = new AutosuggestOptions().SetClipToBoundingBox(new Square(new Coordinates(50, -5), new Coordinates(53, 2)));
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50, -5), new Coordinates(53, 2));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -74,7 +75,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToBoundingInfinitelySmall()
         {
-            var options = new AutosuggestOptions().SetClipToBoundingBox(new Square(new Coordinates(50, -5), new Coordinates(50, -5)));
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50, -5), new Coordinates(50, -5));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsFalse(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -83,7 +84,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToBoundingBoxLng()
         {
-            var options = new AutosuggestOptions().SetClipToBoundingBox(new Square(new Coordinates(50, -5), new Coordinates(53, 3544)));
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50, -5), new Coordinates(53, 3544));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -92,7 +93,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToBoundingBoxThatWrapsAroundWorldButExcludesLondon()
         {
-            var options = new AutosuggestOptions().SetClipToBoundingBox(new Square(new Coordinates(50, 2), new Coordinates(53, -5 + 360)));
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50, 2), new Coordinates(53, -5 + 360));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsFalse(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -101,7 +102,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToBoundingBoxThatWrapsAroundPolesButExcludesLondon()
         {
-            var options = new AutosuggestOptions().SetClipToBoundingBox(new Square(new Coordinates(53, -5), new Coordinates(50 + 180, 2)));
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(53, -5), new Coordinates(50 + 180, 2));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsFalse(result.IsSuccessful);
             Assert.AreEqual(What3WordsError.BadClipToBoundingBox, result.Error.Error);
