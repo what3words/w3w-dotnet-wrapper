@@ -40,7 +40,7 @@ var result = await wrapper.ConvertToCoordinates("filled.count.soap").RequestAsyn
 
 - **Autosuggest()** - AutoSuggest can take a slightly incorrect 3 word address, and suggest a list of valid 3 word addresses. For more autosuggest proprieties similar to *focus* below go to our [documentation](https://developer.what3words.com/public-api/docs#autosuggest)
 ```C#
-var result = await wrapper.Autosuggest("index.home.r", AutosuggestOptions().SetFocus(51.502,-0.12345)).RequestAsync();
+var result = await wrapper.Autosuggest("index.home.r", new AutosuggestOptions().SetFocus(51.502,-0.12345)).RequestAsync();
 ```
 - **GridSection()** - Returns a section of the 3m x 3m what3words grid for a bounding box (Coordinats SW, Coordinates NE).
 ```C#
