@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.response;
@@ -20,6 +22,16 @@ namespace what3words.dotnet.wrapper.utests
         public async Task ConvertTo3WA_Success()
         {
             var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
+            Assert.IsTrue(result.IsSuccessful);
+            Assert.AreEqual("blame.deflection.hills", result.Data.Words);
+        }
+
+        [Test]
+        public async Task ConvertTo3WA_CultureVariant_Success()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
+            var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
+            Assert.IsTrue(result.IsSuccessful);
             Assert.AreEqual("blame.deflection.hills", result.Data.Words);
         }
 

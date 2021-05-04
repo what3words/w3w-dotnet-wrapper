@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using what3words.dotnet.wrapper;
 using what3words.dotnet.wrapper.models;
@@ -57,7 +58,7 @@ namespace sample
         private async void ButtonConvertTo3wa_Clicked(object sender, EventArgs e)
         {
             var latLong = EntryConvertTo3wa.Text.Replace(" ", "").Split(',').Where(x => x != "");
-            if(double.TryParse(latLong.ElementAt(0),out var lat) && double.TryParse(latLong.ElementAt(1), out var lng))
+            if(double.TryParse(latLong.ElementAt(0), NumberStyles.Any, CultureInfo.InvariantCulture, out var lat) && double.TryParse(latLong.ElementAt(1), NumberStyles.Any, CultureInfo.InvariantCulture, out var lng))
             {
                 var convertTo3waResult = await api.ConvertTo3WA(new Coordinates(lat, lng)).RequestAsync();
                 if(convertTo3waResult.IsSuccessful)

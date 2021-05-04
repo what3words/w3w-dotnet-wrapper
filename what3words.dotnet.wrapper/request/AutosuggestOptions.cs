@@ -1,5 +1,6 @@
 ﻿using Refit;
 using System.Collections.Generic;
+using System.Globalization;
 using what3words.dotnet.wrapper.models;
 
 namespace what3words.dotnet.wrapper.request
@@ -107,7 +108,7 @@ namespace what3words.dotnet.wrapper.request
         */
         public AutosuggestOptions SetFocus(Coordinates coordinates)
         {
-            Focus = coordinates.Lat + "," + coordinates.Lng;
+            Focus = coordinates.Lat.ToString(CultureInfo.InvariantCulture) + "," + coordinates.Lng.ToString(CultureInfo.InvariantCulture);
             return this;
         }
 
@@ -141,7 +142,7 @@ namespace what3words.dotnet.wrapper.request
         */
         public AutosuggestOptions SetClipToCircle(Coordinates centre, double radius)
         {
-            ClipToCircle = centre.Lat + "," + centre.Lng + "," + radius;
+            ClipToCircle = centre.Lat.ToString(CultureInfo.InvariantCulture) + "," + centre.Lng.ToString(CultureInfo.InvariantCulture) + "," + radius.ToString(CultureInfo.InvariantCulture);
             return this;
         }
 
@@ -158,8 +159,8 @@ namespace what3words.dotnet.wrapper.request
             List<string> coordinatesList = new List<string>();
             foreach (Coordinates coordinates in polygon)
             {
-                coordinatesList.Add(coordinates.Lat.ToString());
-                coordinatesList.Add(coordinates.Lng.ToString());
+                coordinatesList.Add(coordinates.Lat.ToString(CultureInfo.InvariantCulture));
+                coordinatesList.Add(coordinates.Lng.ToString(CultureInfo.InvariantCulture));
             }
             ClipToPolygon = string.Join(",", coordinatesList);
             return this;
@@ -174,8 +175,8 @@ namespace what3words.dotnet.wrapper.request
         */
         public AutosuggestOptions SetClipToBoundingBox(Coordinates southWest, Coordinates northEast)
         {
-            ClipToBoundingBox = southWest.Lat + "," + southWest.Lng + "," +
-                    northEast.Lat + "," + northEast.Lng;
+            ClipToBoundingBox = southWest.Lat.ToString(CultureInfo.InvariantCulture) + "," + southWest.Lng.ToString(CultureInfo.InvariantCulture) + "," +
+                    northEast.Lat.ToString(CultureInfo.InvariantCulture) + "," + northEast.Lng.ToString(CultureInfo.InvariantCulture);
             return this;
         }
 
