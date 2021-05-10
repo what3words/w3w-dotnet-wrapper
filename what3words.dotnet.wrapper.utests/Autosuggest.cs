@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.request;
@@ -37,6 +39,17 @@ namespace what3words.dotnet.wrapper.utests
         }
 
         [Test]
+        public async Task Autosuggest_Culture_ValidFocus()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-PT");
+            var options = new AutosuggestOptions().SetFocus(new Coordinates(51.2, 0.2));
+            var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
+            Assert.IsTrue(result.IsSuccessful);
+            Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
+        }
+
+
+        [Test]
         public async Task Autosuggest_BadFocus()
         {
             var options = new AutosuggestOptions().SetFocus(new Coordinates(151.2, 0.2));
@@ -48,6 +61,16 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToCircle()
         {
+            var options = new AutosuggestOptions().SetClipToCircle(new Coordinates(-90.000000, 360.0), 100);
+            var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
+            Assert.IsFalse(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
+            Assert.IsTrue(result.IsSuccessful);
+        }
+
+        [Test]
+        public async Task Autosuggest_Culture_ClipToCircle()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-PT");
             var options = new AutosuggestOptions().SetClipToCircle(new Coordinates(-90.000000, 360.0), 100);
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsFalse(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -67,6 +90,16 @@ namespace what3words.dotnet.wrapper.utests
         public async Task Autosuggest_ClipToBoundingBox()
         {
             var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50, -5), new Coordinates(53, 2));
+            var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
+            Assert.IsTrue(result.IsSuccessful);
+            Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
+        }
+
+        [Test]
+        public async Task Autosuggest_Culture_ClipToBoundingBox()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-PT");
+            var options = new AutosuggestOptions().SetClipToBoundingBox(new Coordinates(50.001, -5.001), new Coordinates(53.001, 2.001));
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -129,7 +162,17 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToPolygon()
         {
-            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51, -1), new Coordinates(53, 0), new Coordinates(51, 1), new Coordinates(51, -1) });
+            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51.001, -1.001), new Coordinates(53.001, 0.001), new Coordinates(51.001, 1.001), new Coordinates(51.001, -1.001) });
+            var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
+            Assert.IsTrue(result.IsSuccessful);
+            Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
+        }
+
+        [Test]
+        public async Task Autosuggest_Culture_ClipToPolygon()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-PT");
+            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51.001, -1.001), new Coordinates(53.001, 0.001), new Coordinates(51.001, 1.001), new Coordinates(51.001, -1.001) });
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));
@@ -138,7 +181,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToPolygonWithFewPoints()
         {
-            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51, -1), new Coordinates(53, 0), new Coordinates(51, 1) });
+            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51.001, -1.001), new Coordinates(53.001, 0.001), new Coordinates(51.001, 1.001) });
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsFalse(result.IsSuccessful);
             Assert.AreEqual(What3WordsError.BadClipToPolygon, result.Error.Error);
@@ -147,7 +190,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task Autosuggest_ClipToPolygonWithHugeLongitude()
         {
-            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51, -1 - 180), new Coordinates(53, 0), new Coordinates(51, 1 + 180), new Coordinates(51, -1 - 180) });
+            var options = new AutosuggestOptions().SetClipToPolygon(new List<Coordinates>() { new Coordinates(51.001, -1.001 - 180.001), new Coordinates(53.001, .0010), new Coordinates(51.001, 1.001 + 180.001), new Coordinates(51.001, -1.001 - 180.001) });
             var result = await api.Autosuggest("index.home.ra", options).RequestAsync();
             Assert.IsTrue(result.IsSuccessful);
             Assert.IsTrue(result.Data.Suggestions.Any(x => x.Words == "index.home.raft"));

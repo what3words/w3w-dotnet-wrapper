@@ -1,4 +1,5 @@
 ﻿using Refit;
+using System.Globalization;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
 
@@ -21,7 +22,7 @@ namespace what3words.dotnet.wrapper.request
         {
             this.api = api;
             options = new ConvertTo3WAOptions();
-            options.Coordinates = coordinates.Lat + "," + coordinates.Lng;
+            options.Coordinates = coordinates.Lat.ToString(CultureInfo.InvariantCulture) + "," + coordinates.Lng.ToString(CultureInfo.InvariantCulture);
         }
 
         public ConvertTo3WARequest Language(string language)
