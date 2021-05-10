@@ -5,7 +5,7 @@
     <Authors>What3words</Authors>
     <Product>What3words .NET Wrapper</Product>
     <PackageId>what3words.dotnet.wrapper</PackageId>
-    <PackageVersion>3.0.4-beta</PackageVersion>
+    <PackageVersion>3.0.4</PackageVersion>
     <Description>A .NET library to use the what3words v3 API.
 
 API methods are grouped into a single service object which can be centrally managed by a What3WordsV3 instance. It will act as a factory for all of the API endpoints and will automatically initialize them with your API key.
@@ -18,9 +18,9 @@ To obtain an API key, please visit https://what3words.com/select-plan and sign u
     <PackageTags>What3words, Location, Maps</PackageTags>
     <PackageProjectUrl>https://developer.what3words.com/public-api</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>3.0.4-beta</Version>
-    <AssemblyVersion>3.0.4-beta</AssemblyVersion>
-    <FileVersion>3.0.4-beta</FileVersion>
+    <Version>3.0.4</Version>
+    <AssemblyVersion>3.0.4</AssemblyVersion>
+    <FileVersion>3.0.4</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
