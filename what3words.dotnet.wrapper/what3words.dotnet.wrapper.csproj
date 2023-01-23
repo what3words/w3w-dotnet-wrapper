@@ -18,6 +18,7 @@ To obtain an API key, please visit https://what3words.com/select-plan and sign u
     <PackageTags>What3words, Location, Maps</PackageTags>
     <PackageProjectUrl>https://developer.what3words.com/public-api</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>3.0.5</Version>
     <AssemblyVersion>3.0.5</AssemblyVersion>
     <FileVersion>3.0.5</FileVersion>
@@ -32,6 +33,10 @@ To obtain an API key, please visit https://what3words.com/select-plan and sign u
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+	<None Include="..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath></PackagePath>
+	</None>
   </ItemGroup>
 
 </Project>
