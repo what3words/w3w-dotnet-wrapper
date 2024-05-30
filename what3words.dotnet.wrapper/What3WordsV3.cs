@@ -1,8 +1,10 @@
 ﻿using Refit;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.request;
 
@@ -48,7 +50,7 @@ namespace what3words.dotnet.wrapper
         private void setupHttpClient(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(endpoint);
+            httpClient.BaseAddress = new Uri(endpoint ?? DEFAULT_ENDPOINT);
             httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, getUserAgent());
             httpClient.DefaultRequestHeaders.Add(HEADER_WHAT3WORDS_API_KEY, apiKey);
 
@@ -172,6 +174,32 @@ namespace what3words.dotnet.wrapper
         public AutosuggestSelectionRequest AutosuggestSelection(string rawInput, string sourceApi, string words, int rank, AutosuggestOptions options = null)
         {
             return new AutosuggestSelectionRequest(this, rawInput, sourceApi, words, rank, options);
+        }
+
+        public bool IsPossible3wa(string input)
+        {
+            string pattern = @"^/*(?:[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}|'<,.>?/"";:£§º©®\s]+[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+|[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3})$";
+            return Regex.IsMatch(input, pattern);
+        }
+
+        public IEnumerable<string> FindPossible3wa(string input)
+        {
+            string pattern = @"[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}";
+            return Regex.Matches(input, pattern).OfType<Match>().Select(m => m.Value).AsEnumerable();
+        }
+
+        public bool IsValid3wa(string input)
+        {
+            if (IsPossible3wa(input))
+            {
+                var options = new AutosuggestOptions().SetNResults(1);
+                var result = new AutosuggestRequest(this, input, options).RequestAsync().Result;
+                if (result.IsSuccessful && result.Data.Suggestions.Count > 0)
+                {
+                    return result.Data.Suggestions[0].Words.Equals(input, StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            return false;
         }
     }
 }
