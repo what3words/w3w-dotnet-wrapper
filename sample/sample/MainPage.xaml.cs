@@ -10,7 +10,7 @@ namespace sample
 {
     public partial class MainPage : ContentPage
     {
-        private What3WordsV3 api;
+        private readonly What3WordsV3 api;
 
         public MainPage()
         {
@@ -26,7 +26,7 @@ namespace sample
             var autosuggestResult = await api.Autosuggest(EntryAutosuggest.Text).RequestAsync();
             if (autosuggestResult.IsSuccessful)
             {
-                LabelAutosuggest.Text = "Suggestions: " + string.Join(", ", autosuggestResult.Data.Suggestions.Select(x=>x.Words));
+                LabelAutosuggest.Text = "Suggestions: " + string.Join(", ", autosuggestResult.Data.Suggestions.Select(x => x.Words));
             }
             else
             {
@@ -44,10 +44,10 @@ namespace sample
             else
             {
                 if (convertToCoordinatesResult.Error.Error == What3WordsError.BadClipToCountry)
-                { 
+                {
                     // Invalid country clip is provided, example how to get error type.
                     LabelConvertToCoordinates.Text = What3WordsError.BadClipToCountry + " - " + convertToCoordinatesResult.Error.Message;
-                } 
+                }
                 else
                 {
                     LabelConvertToCoordinates.Text = convertToCoordinatesResult.Error.Code + " - " + convertToCoordinatesResult.Error.Message;
@@ -58,10 +58,10 @@ namespace sample
         private async void ButtonConvertTo3wa_Clicked(object sender, EventArgs e)
         {
             var latLong = EntryConvertTo3wa.Text.Replace(" ", "").Split(',').Where(x => x != "");
-            if(double.TryParse(latLong.ElementAt(0), NumberStyles.Any, CultureInfo.InvariantCulture, out var lat) && double.TryParse(latLong.ElementAt(1), NumberStyles.Any, CultureInfo.InvariantCulture, out var lng))
+            if (double.TryParse(latLong.ElementAt(0), NumberStyles.Any, CultureInfo.InvariantCulture, out var lat) && double.TryParse(latLong.ElementAt(1), NumberStyles.Any, CultureInfo.InvariantCulture, out var lng))
             {
                 var convertTo3waResult = await api.ConvertTo3WA(new Coordinates(lat, lng)).RequestAsync();
-                if(convertTo3waResult.IsSuccessful)
+                if (convertTo3waResult.IsSuccessful)
                 {
                     LabelConvertTo3wa.Text = "3 word address: " + convertTo3waResult.Data.Words;
                 }

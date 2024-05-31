@@ -1,7 +1,8 @@
 ﻿namespace what3words.dotnet.wrapper.models
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class Suggestion {
+    public class Suggestion
+    {
         public string Country { get; set; }
         public string NearestPlace { get; set; }
         public string Words { get; set; }

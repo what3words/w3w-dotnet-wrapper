@@ -1,11 +1,6 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.utests
 {

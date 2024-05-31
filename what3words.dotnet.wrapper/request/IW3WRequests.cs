@@ -34,7 +34,7 @@ public interface IW3WRequests
 
 public abstract class Request<T>
 {
-    internal abstract Task<T> ApiRequest { get; }
+    protected abstract Task<T> ApiRequest { get; }
 
     /**
        * <summary> Request API call asynchronously </summary>
@@ -54,17 +54,21 @@ public abstract class Request<T>
             }
             else
             {
-                var error = new APIError();
-                error.Code = What3WordsError.UnknownError.ToString();
-                error.Message = e.Message;
+                var error = new APIError
+                {
+                    Code = What3WordsError.UnknownError.ToString(),
+                    Message = e.Message
+                };
                 return new APIResponse<T>(error);
             }
         }
         catch (Exception e)
         {
-            var error = new APIError();
-            error.Code = What3WordsError.NetworkError.ToString();
-            error.Message = e.Message;
+            var error = new APIError
+            {
+                Code = What3WordsError.NetworkError.ToString(),
+                Message = e.Message
+            };
             return new APIResponse<T>(error);
         }
     }

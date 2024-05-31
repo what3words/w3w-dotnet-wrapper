@@ -1,9 +1,8 @@
 ﻿using Refit;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.request;
@@ -13,9 +12,9 @@ namespace what3words.dotnet.wrapper
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class What3WordsV3
     {
-        private static string DEFAULT_ENDPOINT = "https://api.what3words.com/v3";
-        private static string HEADER_WHAT3WORDS_API_KEY = "X-Api-Key";
-        private static string W3W_WRAPPER = "X-W3W-Wrapper";
+        private static readonly string DEFAULT_ENDPOINT = "https://api.what3words.com/v3";
+        private static readonly string HEADER_WHAT3WORDS_API_KEY = "X-Api-Key";
+        private static readonly string W3W_WRAPPER = "X-W3W-Wrapper";
 
 
         ///<summary>Get a new API manager instance.</summary>
@@ -23,7 +22,7 @@ namespace what3words.dotnet.wrapper
         ///<param name="apiKey">Your what3words API key obtained from https://what3words.com/select-plan</param>
         public What3WordsV3(string apiKey)
         {
-            setupHttpClient(apiKey, DEFAULT_ENDPOINT, null);
+            SetupHttpClient(apiKey, DEFAULT_ENDPOINT, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
@@ -32,7 +31,7 @@ namespace what3words.dotnet.wrapper
         ///<param name="endpoint">override the default public API endpoint. </param>
         public What3WordsV3(string apiKey, string endpoint)
         {
-            setupHttpClient(apiKey, endpoint, null);
+            SetupHttpClient(apiKey, endpoint, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
@@ -42,16 +41,18 @@ namespace what3words.dotnet.wrapper
         ///<param name="headers">add any custom HTTP headers to send in each request</param>
         protected What3WordsV3(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
-            setupHttpClient(apiKey, endpoint, headers);
+            SetupHttpClient(apiKey, endpoint, headers);
         }
 
-        internal IW3WRequests request { get; set; }
+        internal IW3WRequests Request { get; set; }
 
-        private void setupHttpClient(string apiKey, string endpoint, Dictionary<string, string> headers)
+        private void SetupHttpClient(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(endpoint ?? DEFAULT_ENDPOINT);
-            httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, getUserAgent());
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(endpoint ?? DEFAULT_ENDPOINT)
+            };
+            httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, GetUserAgent());
             httpClient.DefaultRequestHeaders.Add(HEADER_WHAT3WORDS_API_KEY, apiKey);
 
             if (headers != null)
@@ -62,10 +63,10 @@ namespace what3words.dotnet.wrapper
                 }
             }
 
-            request = RestService.For<IW3WRequests>(httpClient);
+            Request = RestService.For<IW3WRequests>(httpClient);
         }
 
-        private string getUserAgent()
+        private string GetUserAgent()
         {
             return "what3words-dotNet/" + (GetType().Assembly.GetName().Version.ToString()) + " ("
                 + (Environment.OSVersion) + ")";
@@ -178,13 +179,13 @@ namespace what3words.dotnet.wrapper
 
         public bool IsPossible3wa(string input)
         {
-            string pattern = @"^/*(?:[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}|'<,.>?/"";:£§º©®\s]+[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+|[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3})$";
+            var pattern = @"^/*(?:[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}|'<,.>?/"";:£§º©®\s]+[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+|[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+([\u0020\u00A0][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]+){1,3})$";
             return Regex.IsMatch(input, pattern);
         }
 
         public IEnumerable<string> FindPossible3wa(string input)
         {
-            string pattern = @"[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}";
+            var pattern = @"[^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}[.｡。･・︒។։။۔።।][^0-9`~!@#$%^&*()+\-_=[{\]}\\|'<,.>?/"";:£§º©®\s]{1,}";
             return Regex.Matches(input, pattern).OfType<Match>().Select(m => m.Value).AsEnumerable();
         }
 
