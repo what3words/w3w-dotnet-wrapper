@@ -6,7 +6,8 @@ using what3words.dotnet.wrapper.models;
 namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class ConvertTo3WARequest : Request<Address> {
+    public class ConvertTo3WARequest : Request<Address>
+    {
         public class ConvertTo3WAOptions
         {
             [AliasAs("coordinates")]
@@ -15,27 +16,29 @@ namespace what3words.dotnet.wrapper.request
             public string Language { get; set; }
         }
 
-        private What3WordsV3 api;
-        private ConvertTo3WAOptions options;
+        private readonly What3WordsV3 _api;
+        private readonly ConvertTo3WAOptions _options;
 
         public ConvertTo3WARequest(What3WordsV3 api, Coordinates coordinates)
         {
-            this.api = api;
-            options = new ConvertTo3WAOptions();
-            options.Coordinates = coordinates.Lat.ToString(CultureInfo.InvariantCulture) + "," + coordinates.Lng.ToString(CultureInfo.InvariantCulture);
+            _api = api;
+            _options = new ConvertTo3WAOptions
+            {
+                Coordinates = coordinates.Lat.ToString(CultureInfo.InvariantCulture) + "," + coordinates.Lng.ToString(CultureInfo.InvariantCulture)
+            };
         }
 
         public ConvertTo3WARequest Language(string language)
         {
-            options.Language = language;
+            _options.Language = language;
             return this;
         }
 
-        internal override Task<Address> ApiRequest
+        protected override Task<Address> ApiRequest
         {
             get
             {
-                return api.request.ConvertTo3WA(options);
+                return _api.Request.ConvertTo3WA(_options);
             }
         }
     }

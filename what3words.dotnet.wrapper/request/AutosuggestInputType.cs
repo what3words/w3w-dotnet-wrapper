@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public enum AutosuggestInputType {
+public enum AutosuggestInputType
+{
     /**
      * Text typed by a user, e.g.'index.home.raf'. Default setting.
      * Expects exactly two dots and no whitespace in the input.

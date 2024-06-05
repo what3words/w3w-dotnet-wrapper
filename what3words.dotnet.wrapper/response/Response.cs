@@ -3,7 +3,7 @@
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class ApiException
     {
-        public APIError Error { get;set; }
+        public APIError Error { get; set; }
     }
 
     public class APIResponse<T>

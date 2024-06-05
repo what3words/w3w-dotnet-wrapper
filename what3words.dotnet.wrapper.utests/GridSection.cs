@@ -13,7 +13,7 @@ namespace what3words.dotnet.wrapper.utests
         [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"));
+            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"), Environment.GetEnvironmentVariable("W3W_API_ENDPOINT"));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace what3words.dotnet.wrapper.utests
         [Test]
         public async Task GridSection_BadBoundingBox()
         {
-            var result = await api.GridSection(new Coordinates(100,100), new Coordinates(51.222011, 0.152311)).RequestAsync();
+            var result = await api.GridSection(new Coordinates(100, 100), new Coordinates(51.222011, 0.152311)).RequestAsync();
             Assert.IsFalse(result.IsSuccessful);
             Assert.AreEqual(What3WordsError.BadBoundingBox, result.Error.Error);
         }

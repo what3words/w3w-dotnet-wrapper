@@ -5,22 +5,22 @@ namespace what3words.dotnet.wrapper.request
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class AutosuggestRequest : Request<AutoSuggest>
     {
-        internal What3WordsV3 api;
-        internal AutosuggestOptions options;
-        internal string input;
+        internal What3WordsV3 _api;
+        internal AutosuggestOptions _options;
+        internal string _input;
 
         public AutosuggestRequest(What3WordsV3 api, string input, AutosuggestOptions options)
         {
-            this.api = api;
-            this.options = options;
-            this.input = input;
+            _api = api;
+            _options = options;
+            _input = input;
         }
 
-        internal override Task<AutoSuggest> ApiRequest
+        protected override Task<AutoSuggest> ApiRequest
         {
             get
             {
-                return api.request.AutoSuggest(input, options);
+                return _api.Request.AutoSuggest(_input, _options);
             }
         }
     }

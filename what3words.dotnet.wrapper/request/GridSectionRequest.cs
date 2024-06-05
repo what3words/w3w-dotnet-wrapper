@@ -6,21 +6,21 @@ namespace what3words.dotnet.wrapper.request
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class GridSectionRequest : Request<GridSection>
     {
-        private What3WordsV3 api;
-        private string boundingBox;
+        private readonly What3WordsV3 _api;
+        private readonly string _boundingBox;
 
         public GridSectionRequest(What3WordsV3 api, Coordinates southWest, Coordinates northEast)
         {
-            this.api = api;
-            this.boundingBox = southWest.Lat + "," + southWest.Lng + "," +
+            _api = api;
+            _boundingBox = southWest.Lat + "," + southWest.Lng + "," +
                      northEast.Lat + "," + northEast.Lng;
         }
 
-        internal override Task<GridSection> ApiRequest
+        protected override Task<GridSection> ApiRequest
         {
             get
             {
-                return api.request.GridSection(boundingBox);
+                return _api.Request.GridSection(_boundingBox);
             }
         }
     }

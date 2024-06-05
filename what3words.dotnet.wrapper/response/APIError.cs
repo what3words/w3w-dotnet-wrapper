@@ -8,10 +8,11 @@ namespace what3words.dotnet.wrapper.response
         public string Code { get; set; }
         public string Message { get; set; }
 
-        public What3WordsError Error { get
+        public What3WordsError Error
+        {
+            get
             {
-                var error = What3WordsError.UnknownError;
-                Enum.TryParse(Code, out error);
+                Enum.TryParse(Code, out What3WordsError error);
                 return error;
             }
         }

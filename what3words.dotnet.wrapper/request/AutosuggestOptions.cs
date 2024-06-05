@@ -6,7 +6,7 @@ using what3words.dotnet.wrapper.models;
 namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class AutosuggestOptions 
+    public class AutosuggestOptions
     {
         [AliasAs("n-results")]
         public string NResults { get; private set; }
@@ -156,8 +156,8 @@ namespace what3words.dotnet.wrapper.request
         */
         public AutosuggestOptions SetClipToPolygon(List<Coordinates> polygon)
         {
-            List<string> coordinatesList = new List<string>();
-            foreach (Coordinates coordinates in polygon)
+            var coordinatesList = new List<string>();
+            foreach (var coordinates in polygon)
             {
                 coordinatesList.Add(coordinates.Lat.ToString(CultureInfo.InvariantCulture));
                 coordinatesList.Add(coordinates.Lng.ToString(CultureInfo.InvariantCulture));

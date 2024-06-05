@@ -11,10 +11,10 @@ namespace what3words.dotnet.wrapper.utests
     {
         private What3WordsV3 api;
 
-        [SetUp] 
+        [SetUp]
         public void Setup()
         {
-            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"));
+            api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"), Environment.GetEnvironmentVariable("W3W_API_ENDPOINT"));
         }
 
         [Test]
