@@ -23,7 +23,7 @@ jobs:
           echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ./global.json
       - name: Install project dependencies
         run: |
-          dotnet restore --locked-mode
+          dotnet restore what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj --locked-mode
       - name: Execute tests
         run: |
           dotnet test what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj --configuration:"Release" --no-restore --logger "trx;LogFileName=test-results.trx" -p:CollectCoverage=true
