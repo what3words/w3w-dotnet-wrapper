@@ -12,7 +12,7 @@ namespace what3words.dotnet.wrapper
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class What3WordsV3
     {
-        private static readonly string DEFAULT_ENDPOINT = "https://api.what3words.com/v3";
+        private static readonly string DEFAULT_ENDPOINT = "https://api.what3words.com";
         private static readonly string HEADER_WHAT3WORDS_API_KEY = "X-Api-Key";
         private static readonly string W3W_WRAPPER = "X-W3W-Wrapper";
 
@@ -20,18 +20,16 @@ namespace what3words.dotnet.wrapper
         ///<summary>Get a new API manager instance.</summary>
         ///
         ///<param name="apiKey">Your what3words API key obtained from https://what3words.com/select-plan</param>
-        public What3WordsV3(string apiKey)
+        public What3WordsV3(string apiKey) : this(apiKey, DEFAULT_ENDPOINT)
         {
-            SetupHttpClient(apiKey, DEFAULT_ENDPOINT, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
         ///
         ///<param name="apiKey">Your what3words API key obtained from https://what3words.com/select-plan </param>
         ///<param name="endpoint">override the default public API endpoint. </param>
-        public What3WordsV3(string apiKey, string endpoint)
+        public What3WordsV3(string apiKey, string endpoint) : this(apiKey, endpoint, null)
         {
-            SetupHttpClient(apiKey, endpoint, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
@@ -41,7 +39,13 @@ namespace what3words.dotnet.wrapper
         ///<param name="headers">add any custom HTTP headers to send in each request</param>
         protected What3WordsV3(string apiKey, string endpoint, Dictionary<string, string> headers)
         {
-            SetupHttpClient(apiKey, endpoint, headers);
+            Console.WriteLine("Endpoint: " + endpoint + " ApiKey: " + apiKey);
+            var uri = new Uri(endpoint);
+            if (!string.IsNullOrEmpty(uri.AbsolutePath) && uri.AbsolutePath != "/")
+            {
+                throw new ArgumentException("The endpoint should only contain the base URL without any paths.", nameof(endpoint));
+            }
+            SetupHttpClient(apiKey, $"{DEFAULT_ENDPOINT}/v3", headers);
         }
 
         internal IW3WRequests Request { get; set; }
