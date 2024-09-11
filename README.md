@@ -1,4 +1,6 @@
-# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="64" height="64" alt="what3words"/>&nbsp;w3w-dotnet-wrapper
+![what3words](https://avatars.githubusercontent.com/u/170637712?s=110 'what3words')
+
+# w3w-dotnet-wrapper
 
 An .NET library to use the [what3words v3 API](https://docs.what3words.com/api/v3/).
 
