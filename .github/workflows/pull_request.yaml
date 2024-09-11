@@ -29,7 +29,7 @@ jobs:
           dotnet test what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj --configuration:"Release" --no-restore --logger "trx;LogFileName=test-results.trx" -p:CollectCoverage=true
         env:
           W3W_API_KEY: ${{ secrets.W3W_API_KEY }}
-          W3W_API_ENDPOINT: ${{ vars.W3W_API_ENDPOINT }}
+          W3W_API_ENDPOINT: ${{ secrets.W3W_API_ENDPOINT }}
       - name: Publish test report
         uses: dorny/test-reporter@v1
         if: success() || failure()
