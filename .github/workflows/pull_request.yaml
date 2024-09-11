@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
       - name: Override global.json
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ${{ github.workspace }}\\global.json
