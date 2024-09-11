@@ -18,19 +18,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v2
       - name: Override global.json
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ${{ github.workspace }}\\global.json
-          dir
       - name: Install project dependencies
         run: |
-          dotnet --version
           dotnet restore what3words.dotnet.wrapper.utests\\what3words.dotnet.wrapper.utests.csproj --locked-mode
       - name: Execute tests
         run: |
-          dotnet --version
           dotnet test what3words.dotnet.wrapper.utests\\what3words.dotnet.wrapper.utests.csproj --configuration:"Release" --no-restore --logger "trx;LogFileName=test-results.trx" -p:CollectCoverage=true
         env:
           W3W_API_KEY: ${{ secrets.W3W_API_KEY }}
