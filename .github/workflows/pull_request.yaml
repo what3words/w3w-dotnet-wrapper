@@ -30,6 +30,7 @@ jobs:
         env:
           W3W_API_KEY: ${{ secrets.W3W_API_KEY }}
           W3W_API_ENDPOINT: ${{ secrets.W3W_API_ENDPOINT }}
+          W3W_FREE_PLAN_API_KEY: ${{ secrets.W3W_FREE_PLAN_API_KEY }}
       - name: Publish test report
         uses: dorny/test-reporter@v1
         if: success() || failure()
