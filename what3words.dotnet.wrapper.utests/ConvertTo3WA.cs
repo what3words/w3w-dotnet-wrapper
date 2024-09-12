@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -12,51 +12,50 @@ namespace what3words.dotnet.wrapper.utests
     {
         private What3WordsV3 api;
 
-        [SetUp]
-        public void Setup()
+        public ConvertTo3WA()
         {
             api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"), Environment.GetEnvironmentVariable("W3W_API_ENDPOINT"));
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_Success()
         {
             var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
-            Assert.IsTrue(result.IsSuccessful);
-            Assert.AreEqual("blame.deflection.hills", result.Data.Words);
+            Assert.True(result.IsSuccessful);
+            Assert.Equal("blame.deflection.hills", result.Data.Words);
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_CultureVariant_Success()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
             var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
-            Assert.IsTrue(result.IsSuccessful);
-            Assert.AreEqual("blame.deflection.hills", result.Data.Words);
+            Assert.True(result.IsSuccessful);
+            Assert.Equal("blame.deflection.hills", result.Data.Words);
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_SuccessWithLanguage()
         {
             var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).Language("es").RequestAsync();
-            Assert.AreEqual("ronca.largos.vegetales", result.Data.Words);
+            Assert.Equal("ronca.largos.vegetales", result.Data.Words);
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_InvalidKey()
         {
-            var api = new What3WordsV3("YOUR_API_KEY_HERES");
+            var api = new What3WordsV3("YOUR_API_KEY_HERE");
             var result = await api.ConvertTo3WA(new Coordinates(51.222011, 0.152311)).RequestAsync();
-            Assert.IsFalse(result.IsSuccessful);
-            Assert.AreEqual(What3WordsError.InvalidKey, result.Error.Error);
+            Assert.False(result.IsSuccessful);
+            Assert.Equal(What3WordsError.InvalidKey, result.Error.Error);
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_BadCoordinates()
         {
             var result = await api.ConvertTo3WA(new Coordinates(100, 100)).RequestAsync();
-            Assert.IsFalse(result.IsSuccessful);
-            Assert.AreEqual(What3WordsError.BadCoordinates, result.Error.Error);
+            Assert.False(result.IsSuccessful);
+            Assert.Equal(What3WordsError.BadCoordinates, result.Error.Error);
         }
     }
 }

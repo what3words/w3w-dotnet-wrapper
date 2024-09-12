@@ -25,6 +25,7 @@
         InvalidApiVersion,
         InvalidReferrer,
         InvalidIpAddress,
-        InvalidAppCredential
+        InvalidAppCredential,
+        QuotaExceeded
     }
 }

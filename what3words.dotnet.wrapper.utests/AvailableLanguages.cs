@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Threading.Tasks;
 
@@ -8,26 +8,25 @@ namespace what3words.dotnet.wrapper.utests
     {
         private What3WordsV3 api;
 
-        [SetUp]
-        public void Setup()
+        public AvailableLanguages()
         {
             api = new What3WordsV3(Environment.GetEnvironmentVariable("W3W_API_KEY"), Environment.GetEnvironmentVariable("W3W_API_ENDPOINT"));
         }
 
-        [Test]
+        [Fact]
         public async Task AvailableLanguages_Success()
         {
             var result = await api.AvailableLanguages().RequestAsync();
-            Assert.IsTrue(result.IsSuccessful);
-            Assert.IsTrue(result.Data.Languages.Count > 0);
+            Assert.True(result.IsSuccessful);
+            Assert.True(result.Data.Languages.Count > 0);
         }
 
-        [Test]
+        [Fact]
         public async Task ConvertTo3WA_InvalidKey()
         {
             var api = new What3WordsV3("YOUR_API_KEY_HERES");
             var result = await api.AvailableLanguages().RequestAsync();
-            Assert.IsFalse(result.IsSuccessful);
+            Assert.False(result.IsSuccessful);
         }
     }
 }
