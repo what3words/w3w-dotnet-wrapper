@@ -1,0 +1,13 @@
+name: Nuget package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Deploy
+        run: echo "Placeholder for nuget pack"
