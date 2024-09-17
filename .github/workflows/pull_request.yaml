@@ -1,0 +1,46 @@
+name: Pull request
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: [3.1.x]
+    name: Run tests using dotnet ${{ matrix.dotnet }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        id: dotnet-setup
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Override global.json
+        run: |
+          echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ./global.json
+      - name: Install project dependencies
+        run: |
+          dotnet restore what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj --locked-mode
+      - name: Execute tests
+        run: |
+          dotnet test what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj --configuration:"Release" --no-restore --logger "trx;LogFileName=test-results.trx" -p:CollectCoverage=true
+        env:
+          W3W_API_KEY: ${{ secrets.W3W_API_KEY }}
+          W3W_API_ENDPOINT: ${{ secrets.W3W_API_ENDPOINT }}
+          W3W_FREE_PLAN_API_KEY: ${{ secrets.W3W_FREE_PLAN_API_KEY }}
+      - name: Publish test report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Unit test report
+          path: ${{ github.workspace }}/what3words.dotnet.wrapper.utests/TestResults/test-results.trx
+          reporter: dotnet-trx
+          fail-on-error: false
+          fail-on-empty: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}

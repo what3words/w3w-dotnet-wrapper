@@ -5,9 +5,31 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Pack nuget package (for code signing)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: [3.1.x]
     timeout-minutes: 10
     steps:
-      - name: Deploy
-        run: echo "Placeholder for nuget pack"
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        id: dotnet-setup
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Override global.json
+        run: |
+          echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ./global.json
+      - name: Install project dependencies
+        run: |
+          dotnet restore what3words.dotnet.wrapper/what3words.dotnet.wrapper.csproj --locked-mode
+      - name: Pack nuget package
+        run: |
+          dotnet pack what3words.dotnet.wrapper/what3words.dotnet.wrapper.csproj --configuration:"Release" --no-restore --output "./artifacts" --include-symbols
+      - name: Upload nuget package
+        uses: actions/upload-artifact@v4
+        with:
+          name: what3words.dotnet.wrapper
+          path: ./artifacts/*.nupkg

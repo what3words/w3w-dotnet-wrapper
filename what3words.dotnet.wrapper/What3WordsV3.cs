@@ -20,18 +20,16 @@ namespace what3words.dotnet.wrapper
         ///<summary>Get a new API manager instance.</summary>
         ///
         ///<param name="apiKey">Your what3words API key obtained from https://what3words.com/select-plan</param>
-        public What3WordsV3(string apiKey)
+        public What3WordsV3(string apiKey) : this(apiKey, DEFAULT_ENDPOINT)
         {
-            SetupHttpClient(apiKey, DEFAULT_ENDPOINT, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
         ///
         ///<param name="apiKey">Your what3words API key obtained from https://what3words.com/select-plan </param>
         ///<param name="endpoint">override the default public API endpoint. </param>
-        public What3WordsV3(string apiKey, string endpoint)
+        public What3WordsV3(string apiKey, string endpoint) : this(apiKey, endpoint, null)
         {
-            SetupHttpClient(apiKey, endpoint, null);
         }
 
         ///<summary>Get a new API manager instance.</summary>
@@ -50,7 +48,7 @@ namespace what3words.dotnet.wrapper
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri(endpoint ?? DEFAULT_ENDPOINT)
+                BaseAddress = new Uri(endpoint.TrimEnd('/') ?? DEFAULT_ENDPOINT)
             };
             httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, GetUserAgent());
             httpClient.DefaultRequestHeaders.Add(HEADER_WHAT3WORDS_API_KEY, apiKey);
