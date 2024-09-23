@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="5.2.4" />
+    <PackageReference Include="Refit" Version="6.0.24" />
   </ItemGroup>
 
   <ItemGroup>

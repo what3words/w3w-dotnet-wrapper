@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet: [3.1.x]
+        dotnet: [5.0.408]
     timeout-minutes: 10
     steps:
       - name: Checkout repo
