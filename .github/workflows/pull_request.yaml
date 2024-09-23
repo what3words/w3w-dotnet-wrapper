@@ -18,7 +18,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}
-          cache: true
       - name: Override global.json
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet-setup.outputs.dotnet-version }}"}}' > ./global.json
