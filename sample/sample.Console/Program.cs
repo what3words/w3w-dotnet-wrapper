@@ -1,4 +1,8 @@
-﻿using what3words.dotnet.wrapper;
+﻿/**
+ * Simple console application using the what3words-dotnet-wrapper.
+ */
+
+using what3words.dotnet.wrapper;
 using what3words.dotnet.wrapper.models;
 using what3words.dotnet.wrapper.response;
 using System.Linq;
@@ -16,6 +20,11 @@ namespace sample.Console
             try
             {
                 var arguments = new Arguments(args);
+                if (arguments.GetCommand().Equals("help"))
+                {
+                    PrintUsage();
+                    return;
+                }
                 string apiKey = arguments.GetArgument("--api-key");
                 if (apiKey != null)
                 {
@@ -47,17 +56,13 @@ namespace sample.Console
 
         static void PrintUsage()
         {
-            Console.WriteLine("Usage: w3w <command> [options]");
+            Console.WriteLine("Usage: <command> [options]");
             Console.WriteLine("Required parameters:");
             Console.WriteLine("  --api-key <key>");
             Console.WriteLine("Commands:");
             Console.WriteLine("  convert-to-coordinates --3wa <3 word address>");
             Console.WriteLine("  convert-to-3wa --lat <latitude> --lng <longitude>");
             Console.WriteLine("  autosuggest --input <input>");
-            Console.WriteLine("Example:");
-            Console.WriteLine("  w3w convert-to-coordinates --3wa filled.count.soap --api-key <key>");
-            Console.WriteLine("  w3w convert-to-3wa --lat 51.520847 --lng -0.195521 --api-key <key>");
-            Console.WriteLine("  w3w autosuggest --input filled.count.soa --api-key <key>");
         }
 
         static void ConvertToCoordinates(What3WordsV3 api, Arguments arg)

@@ -90,8 +90,8 @@ To run the tests, you need to provide the following environment variables:
 ```bash
 dotnet test what3words.dotnet.wrapper.utests/what3words.dotnet.wrapper.utests.csproj
 
-Test run for /w3w-dotnet-wrapper/what3words.dotnet.wrapper.utests/bin/Debug/netcoreapp3.1/what3words.dotnet.wrapper.utests.dll(.NETCoreApp,Version=v3.1)
-Microsoft (R) Test Execution Command Line Tool Version 16.7.1
+Test run for /w3w-dotnet-wrapper/what3words.dotnet.wrapper.utests/bin/Debug/net5.0/what3words.dotnet.wrapper.utests.dll(.NETCoreApp,Version=v5.0)
+Microsoft (R) Test Execution Command Line Tool Version 16.11.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
