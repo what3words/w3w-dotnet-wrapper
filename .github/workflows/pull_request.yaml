@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet: [6.0.425]
+        dotnet: [5.0.408]
     name: Run tests using dotnet ${{ matrix.dotnet }}
     steps:
       - name: Checkout repo
