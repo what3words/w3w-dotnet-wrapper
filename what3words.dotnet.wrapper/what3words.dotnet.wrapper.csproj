@@ -5,7 +5,7 @@
     <Authors>What3words</Authors>
     <Product>What3words .NET Wrapper</Product>
     <PackageId>what3words.dotnet.wrapper</PackageId>
-    <PackageVersion>3.1.1</PackageVersion>
+    <PackageVersion>3.1.2</PackageVersion>
     <Description>A .NET library to use the what3words v3 API.
 
       API methods are grouped into a single service object which can be centrally managed by a
@@ -23,9 +23,9 @@
     <PackageProjectUrl>https://developer.what3words.com/public-api</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>3.1.1</Version>
-    <AssemblyVersion>3.1.1</AssemblyVersion>
-    <FileVersion>3.1.1</FileVersion>
+    <Version>3.1.2</Version>
+    <AssemblyVersion>3.1.2</AssemblyVersion>
+    <FileVersion>3.1.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
