@@ -103,3 +103,25 @@ Total tests: 42
      Passed: 42
  Total time: 7.0222 Seconds
 ```
+
+## Changes
+
+### v4.0.0
+
+- **breaking change**: moved `AutosuggestInputType` and `Request<T>` to `what3words.dotnet.wrapper.request` namespace
+
+### v3.1.1
+
+- fix: revert Refit v6.0.24
+
+### v3.1.0
+
+- feat: validation helper methods
+
+### v3.0.5
+
+- fix: updated Line class visibility
+
+### v3.0.4
+
+- fix: culture variant on coordinates double to URL
