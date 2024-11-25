@@ -17,7 +17,7 @@ namespace sample.Console
             try
             {
                 var arguments = new Arguments(args);
-                if (arguments.GetCommand().Equals("help"))
+                if (arguments.GetCommand().Equals("help", System.StringComparison.Ordinal))
                 {
                     PrintUsage();
                     return;
