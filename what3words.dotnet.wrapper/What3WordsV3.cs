@@ -47,7 +47,7 @@ namespace what3words.dotnet.wrapper
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri(endpoint.TrimEnd('/') + "/" ?? DEFAULT_ENDPOINT)
+                BaseAddress = new Uri(endpoint.TrimEnd('/') + '/' ?? DEFAULT_ENDPOINT)
             };
             httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, GetUserAgent());
             httpClient.DefaultRequestHeaders.Add(HEADER_WHAT3WORDS_API_KEY, apiKey);
