@@ -1,12 +1,12 @@
-using Xunit;
 using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace what3words.dotnet.wrapper.utests
 {
     public class AvailableLanguages
     {
-        private What3WordsV3 api;
+        private readonly What3WordsV3 api;
 
         public AvailableLanguages()
         {
