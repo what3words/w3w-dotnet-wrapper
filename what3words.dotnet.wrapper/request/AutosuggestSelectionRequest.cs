@@ -36,7 +36,7 @@ namespace what3words.dotnet.wrapper.request
             {
                 return new APIResponse(new APIError
                 {
-                    Code = What3WordsError.NetworkError.ToString(),
+                    Code = e.Error.Code,
                     Message = e.Error.Message
                 });
             }
@@ -44,7 +44,7 @@ namespace what3words.dotnet.wrapper.request
             {
                 var error = new APIError
                 {
-                    Code = What3WordsError.NetworkError.ToString(),
+                    Code = What3WordsError.UnknownError.ToString(),
                     Message = e.Message
                 };
                 return new APIResponse(error);
