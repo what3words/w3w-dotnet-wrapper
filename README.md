@@ -106,6 +106,10 @@ Total tests: 42
 
 ## Changes
 
+### v4.1.0
+
+- chore: removed Refit dependency
+
 ### v4.0.0
 
 - **breaking change**: moved `AutosuggestInputType` and `Request<T>` to `what3words.dotnet.wrapper.request` namespace
