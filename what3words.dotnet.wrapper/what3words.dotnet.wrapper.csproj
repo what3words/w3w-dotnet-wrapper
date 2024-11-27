@@ -29,10 +29,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="6.0.24" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="web_hi_res_512.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -41,6 +37,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

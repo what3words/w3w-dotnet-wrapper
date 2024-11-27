@@ -1,5 +1,4 @@
-﻿using Refit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -48,7 +47,7 @@ namespace what3words.dotnet.wrapper
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri(endpoint.TrimEnd('/') ?? DEFAULT_ENDPOINT)
+                BaseAddress = new Uri(endpoint.TrimEnd('/') + '/' ?? DEFAULT_ENDPOINT)
             };
             httpClient.DefaultRequestHeaders.Add(W3W_WRAPPER, GetUserAgent());
             httpClient.DefaultRequestHeaders.Add(HEADER_WHAT3WORDS_API_KEY, apiKey);
@@ -60,14 +59,13 @@ namespace what3words.dotnet.wrapper
                     httpClient.DefaultRequestHeaders.Add(item.Key, item.Value);
                 }
             }
-
-            Request = RestService.For<IW3WRequests>(httpClient);
+            Request = new W3WRequests(httpClient);
         }
 
         private string GetUserAgent()
         {
-            return "what3words-dotNet/" + (GetType().Assembly.GetName().Version.ToString()) + " ("
-                + (Environment.OSVersion) + ")";
+            return "what3words-dotNet/" + GetType().Assembly.GetName().Version.ToString() + " ("
+                + Environment.OSVersion + ")";
         }
 
         /**

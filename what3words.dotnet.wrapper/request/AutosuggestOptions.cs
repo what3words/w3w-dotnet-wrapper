@@ -1,41 +1,40 @@
-﻿using Refit;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using what3words.dotnet.wrapper.models;
 
 namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class AutosuggestOptions
+    public class AutosuggestOptions : URLQueryable
     {
-        [AliasAs("n-results")]
+        [QueryString("n-results")]
         public string NResults { get; private set; }
 
-        [AliasAs("focus")]
+        [QueryString("focus")]
         public string Focus { get; private set; }
 
-        [AliasAs("n-focus-results")]
+        [QueryString("n-focus-results")]
         public string NFocusResults { get; private set; }
 
-        [AliasAs("clip-to-country")]
+        [QueryString("clip-to-country")]
         public string ClipToCountry { get; private set; }
 
-        [AliasAs("clip-to-bounding-box")]
+        [QueryString("clip-to-bounding-box")]
         public string ClipToBoundingBox { get; private set; }
 
-        [AliasAs("clip-to-circle")]
+        [QueryString("clip-to-circle")]
         public string ClipToCircle { get; private set; }
 
-        [AliasAs("clip-to-polygon")]
+        [QueryString("clip-to-polygon")]
         public string ClipToPolygon { get; private set; }
 
-        [AliasAs("input-type")]
+        [QueryString("input-type")]
         public string InputType { get; private set; }
 
-        [AliasAs("prefer-land")]
+        [QueryString("prefer-land")]
         public string PreferLand { get; private set; }
 
-        [AliasAs("language")]
+        [QueryString("language")]
         public string Language { get; private set; }
 
         /**

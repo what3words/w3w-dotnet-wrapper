@@ -1,18 +1,16 @@
-﻿using Refit;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading.Tasks;
 using what3words.dotnet.wrapper.models;
-
 namespace what3words.dotnet.wrapper.request
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class ConvertTo3WARequest : Request<Address>
     {
-        public class ConvertTo3WAOptions
+        public class ConvertTo3WAOptions : URLQueryable
         {
-            [AliasAs("coordinates")]
+            [QueryString("coordinates")]
             public string Coordinates { get; set; }
-            [AliasAs("language")]
+            [QueryString("language")]
             public string Language { get; set; }
         }
 
