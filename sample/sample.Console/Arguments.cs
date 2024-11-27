@@ -1,46 +1,41 @@
 /**
  * A simple utility class to parse command line arguments.
  */
+using System;
+
 namespace sample.Console.Utils
 {
-    using System;
     public class Arguments
     {
-        private string[] _args;
-        private string _command;
+        private readonly string[] args;
+        private readonly string command;
         public Arguments(string[] args)
         {
-            _command = this.ResolveCommand(args);
-            _args = args;
+            command = ResolveCommand(args);
+            this.args = args;
         }
 
-        private string ResolveCommand(string[] args)
+        private static string ResolveCommand(string[] args)
         {
-            if (string.IsNullOrEmpty(args[0]) || args[0].StartsWith("--"))
-            {
-                if (args[0].StartsWith("--") && args[0].Equals("--help"))
-                {
-                    return "help";
-                }
-                throw new InvalidOperationException("Invalid command provided.");
-            }
-            return args[0];
+            return string.IsNullOrEmpty(args[0]) || args[0].StartsWith("--", StringComparison.Ordinal)
+                ? args[0].StartsWith("--", StringComparison.Ordinal) && args[0].Equals("--help", StringComparison.OrdinalIgnoreCase)
+                    ? "help"
+                    : throw new InvalidOperationException("Invalid command provided.")
+                : args[0];
         }
 
         public string GetArgument(string name)
         {
-            if (_args == null || _args.Length == 0)
+            if (args == null || args.Length == 0)
             {
                 throw new InvalidOperationException("No arguments provided.");
             }
-            int index = Array.IndexOf(_args, name);
-            if (index >= 0 && index + 1 < _args.Length && !string.IsNullOrEmpty(_args[index + 1]) && !_args[index + 1].StartsWith("--"))
-            {
-                return _args[index + 1];
-            }
-            throw new InvalidOperationException($"{name} is missing or not provided.");
+            var index = Array.IndexOf(args, name);
+            return index >= 0 && index + 1 < args.Length && !string.IsNullOrEmpty(args[index + 1]) && !args[index + 1].StartsWith("--", StringComparison.Ordinal)
+                ? args[index + 1]
+                : throw new InvalidOperationException($"{name} is missing or not provided.");
         }
 
-        public string GetCommand() => _command;
+        public string GetCommand() => command;
     }
 }
