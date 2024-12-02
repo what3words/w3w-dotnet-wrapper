@@ -9,4 +9,8 @@
     <ProjectReference Include="..\..\what3words.dotnet.wrapper\what3words.dotnet.wrapper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>

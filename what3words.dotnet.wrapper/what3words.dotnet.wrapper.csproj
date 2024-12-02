@@ -5,7 +5,7 @@
     <Authors>What3words</Authors>
     <Product>What3words .NET Wrapper</Product>
     <PackageId>what3words.dotnet.wrapper</PackageId>
-    <PackageVersion>4.0.0</PackageVersion>
+    <PackageVersion>4.1.0</PackageVersion>
     <Description>A .NET library to use the what3words v3 API.
 
       API methods are grouped into a single service object which can be centrally managed by a
@@ -23,14 +23,10 @@
     <PackageProjectUrl>https://developer.what3words.com/public-api</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>4.0.0</Version>
-    <AssemblyVersion>4.0.0</AssemblyVersion>
-    <FileVersion>4.0.0</FileVersion>
+    <Version>4.1.0</Version>
+    <AssemblyVersion>4.1.0</AssemblyVersion>
+    <FileVersion>4.1.0</FileVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Refit" Version="6.0.24" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="web_hi_res_512.png">
@@ -41,6 +37,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

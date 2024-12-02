@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using what3words.dotnet.wrapper.exceptions;
 using what3words.dotnet.wrapper.response;
 
 namespace what3words.dotnet.wrapper.request
@@ -31,28 +32,19 @@ namespace what3words.dotnet.wrapper.request
                 await _api.Request.AutoSuggestSelection(_rawInput, _selection, _rank, _sourceApi, _options);
                 return new APIResponse();
             }
-            catch (Refit.ApiException e)
+            catch (ApiException<APIError> e)
             {
-                var apiException = await e.GetContentAsAsync<ApiException>();
-                if (apiException != null)
+                return new APIResponse(new APIError
                 {
-                    return new APIResponse(apiException.Error);
-                }
-                else
-                {
-                    var error = new APIError
-                    {
-                        Code = What3WordsError.UnknownError.ToString(),
-                        Message = e.Message
-                    };
-                    return new APIResponse(error);
-                }
+                    Code = e.Error.Code,
+                    Message = e.Error.Message
+                });
             }
             catch (Exception e)
             {
                 var error = new APIError
                 {
-                    Code = What3WordsError.NetworkError.ToString(),
+                    Code = What3WordsError.UnknownError.ToString(),
                     Message = e.Message
                 };
                 return new APIResponse(error);

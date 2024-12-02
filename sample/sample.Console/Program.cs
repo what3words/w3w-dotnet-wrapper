@@ -2,35 +2,35 @@
  * Simple console application using the what3words-dotnet-wrapper.
  */
 
+using sample.Console.Utils;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using what3words.dotnet.wrapper;
 using what3words.dotnet.wrapper.models;
-using what3words.dotnet.wrapper.response;
-using System.Linq;
-using System.Globalization;
+using what3words.dotnet.wrapper.request;
 
 namespace sample.Console
 {
-    using System;
-    using Utils;
-
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             try
             {
                 var arguments = new Arguments(args);
-                if (arguments.GetCommand().Equals("help"))
+                if (arguments.GetCommand().Equals("help", System.StringComparison.Ordinal))
                 {
                     PrintUsage();
                     return;
                 }
-                string apiKey = arguments.GetArgument("--api-key");
+                var apiKey = arguments.GetArgument("--api-key");
                 if (apiKey != null)
                 {
-                    What3WordsV3 api = new What3WordsV3(apiKey);
+                    var api = new What3WordsV3(apiKey);
                     switch (arguments.GetCommand())
                     {
+
                         case "convert-to-coordinates":
                             ConvertToCoordinates(api, arguments);
                             break;
@@ -40,63 +40,90 @@ namespace sample.Console
                         case "autosuggest":
                             AutoSuggest(api, arguments);
                             break;
+                        case "autosuggest-with-coordinates":
+                            AutosuggestWithCoordinates(api, arguments);
+                            break;
+                        case "autosuggest-selection":
+                            AutoSuggestSelection(api, arguments);
+                            break;
+                        case "available-languages":
+                            AvailableLanguages(api);
+                            break;
+                        case "grid-section":
+                            GridSection(api, arguments);
+                            break;
+                        case "is-possible-3wa":
+                            IsPossible3wa(api, arguments);
+                            break;
+                        case "find-possible-3wa":
+                            FindPossible3wa(api, arguments);
+                            break;
+                        case "is-valid-3wa":
+                            IsValid3wa(api, arguments);
+                            break;
                         default:
-                            Console.WriteLine("Command is not supported.");
+                            System.Console.WriteLine("Command is not supported.");
                             PrintUsage();
                             break;
                     }
                 }
             }
-            catch (Exception error)
+            catch (System.Exception error)
             {
-                Console.WriteLine("Something went wrong, " + error.Message);
+                System.Console.WriteLine("Something went wrong, " + error.Message);
                 PrintUsage();
             }
         }
 
-        static void PrintUsage()
+        private static void PrintUsage()
         {
-            Console.WriteLine("Usage: <command> [options]");
-            Console.WriteLine("Required parameters:");
-            Console.WriteLine("  --api-key <key>");
-            Console.WriteLine("Commands:");
-            Console.WriteLine("  convert-to-coordinates --3wa <3 word address>");
-            Console.WriteLine("  convert-to-3wa --lat <latitude> --lng <longitude>");
-            Console.WriteLine("  autosuggest --input <input>");
+            System.Console.WriteLine("Usage: <command> [options]");
+            System.Console.WriteLine("Required parameters:");
+            System.Console.WriteLine("  --api-key <key>");
+            System.Console.WriteLine("Commands:");
+            System.Console.WriteLine("  convert-to-coordinates --3wa <3 word address>");
+            System.Console.WriteLine("  convert-to-3wa --lat <latitude> --lng <longitude>");
+            System.Console.WriteLine("  grid-section --sw-lat <latitude> --sw-lng <longitude> --ne-lat <latitude> --ne-lng <longitude>");
+            System.Console.WriteLine("  autosuggest --input <input>");
+            System.Console.WriteLine("  autosuggest-with-coordinates --input <input>");
+            System.Console.WriteLine("  autosuggest-selection --raw-input <input> --source-api <source-api> --words <words> --rank <rank>");
+            System.Console.WriteLine("  available-languages");
+            System.Console.WriteLine("  is-possible-3wa --words <words>");
+            System.Console.WriteLine("  find-possible-3wa --words <words>");
+            System.Console.WriteLine("  is-valid-3wa --words <words>");
         }
 
-        static void ConvertToCoordinates(What3WordsV3 api, Arguments arg)
+        private static void ConvertToCoordinates(What3WordsV3 api, Arguments arg)
         {
             var threeWords = arg.GetArgument("--3wa");
             var result = api.ConvertToCoordinates(threeWords).RequestAsync().Result;
             if (result.IsSuccessful)
             {
-                Console.WriteLine("Coordinates: " + result.Data.Coordinates.Lat + ", " + result.Data.Coordinates.Lng);
+                System.Console.WriteLine("Coordinates: " + result.Data.Coordinates.Lat + ", " + result.Data.Coordinates.Lng);
             }
             else
             {
-                Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
             }
         }
 
-        static void ConvertTo3WA(What3WordsV3 api, Arguments arg)
+        private static void ConvertTo3WA(What3WordsV3 api, Arguments arg)
         {
-            double latitude, longitude;
-            var lat = double.TryParse(arg.GetArgument("--lat"), NumberStyles.Any, CultureInfo.InvariantCulture, out latitude) ? latitude : 0.0;
-            var lng = double.TryParse(arg.GetArgument("--lng"), NumberStyles.Any, CultureInfo.InvariantCulture, out longitude) ? longitude : 0.0;
+            var lat = double.TryParse(arg.GetArgument("--lat"), NumberStyles.Any, CultureInfo.InvariantCulture, out var latitude) ? latitude : 0.0;
+            var lng = double.TryParse(arg.GetArgument("--lng"), NumberStyles.Any, CultureInfo.InvariantCulture, out var longitude) ? longitude : 0.0;
             var coordinates = new Coordinates(lat, lng);
             var result = api.ConvertTo3WA(coordinates).RequestAsync().Result;
             if (result.IsSuccessful)
             {
-                Console.WriteLine($"3 word address: https://w3w.co/{result.Data.Words}");
+                System.Console.WriteLine($"3 word address: https://w3w.co/{result.Data.Words}");
             }
             else
             {
-                Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
             }
         }
 
-        static void AutoSuggest(What3WordsV3 api, Arguments arg)
+        private static void AutoSuggest(What3WordsV3 api, Arguments arg)
         {
             var input = arg.GetArgument("--input");
             var result = api.Autosuggest(input).RequestAsync().Result;
@@ -104,16 +131,122 @@ namespace sample.Console
             {
                 if (result.Data.Suggestions.Count > 0)
                 {
-                    Console.WriteLine("Suggestions: " + string.Join(", ", result.Data.Suggestions.Select(x => $"https://w3w.co/{x.Words}")));
+                    System.Console.WriteLine("Suggestions: " + string.Join(", ", result.Data.Suggestions.Select(x => $"https://w3w.co/{x.Words}")));
                 }
                 else
                 {
-                    Console.WriteLine("No suggestions found.");
+                    System.Console.WriteLine("No suggestions found.");
                 }
             }
             else
             {
-                Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+            }
+        }
+
+        private static void AutoSuggestSelection(What3WordsV3 api, Arguments arg)
+        {
+            var input = arg.GetArgument("--raw-input");
+            var sourceApi = arg.GetArgument("--source-api");
+            var words = arg.GetArgument("--words");
+            var rank = int.TryParse(arg.GetArgument("--rank"), out var r) ? r : 0;
+            var options = new AutosuggestOptions();
+            var result = api.AutosuggestSelection(input, sourceApi, words, rank, options).RequestAsync().Result;
+            if (result.IsSuccessful)
+            {
+                System.Console.WriteLine($"Suggestion for {words} selected");
+            }
+            else
+            {
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+            }
+        }
+
+        private static void AvailableLanguages(What3WordsV3 api)
+        {
+            var result = api.AvailableLanguages().RequestAsync().Result;
+            if (result.IsSuccessful)
+            {
+                System.Console.WriteLine("Languages: " + string.Join(", ", result.Data.Languages.Select(x => $"{x.Name} [{x.Code}]")));
+            }
+            else
+            {
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+            }
+        }
+
+        private static void GridSection(What3WordsV3 api, Arguments arg)
+        {
+            var southWestLat = arg.GetArgument("--sw-lat");
+            var southWestLng = arg.GetArgument("--sw-lng");
+            var northEastLat = arg.GetArgument("--ne-lat");
+            var northEastLng = arg.GetArgument("--ne-lng");
+            var southWest = new Coordinates(double.Parse(southWestLat, CultureInfo.InvariantCulture), double.Parse(southWestLng, CultureInfo.InvariantCulture));
+            var northEast = new Coordinates(double.Parse(northEastLat, CultureInfo.InvariantCulture), double.Parse(northEastLng, CultureInfo.InvariantCulture));
+            var result = api.GridSection(southWest, northEast).RequestAsync().Result;
+            if (result.IsSuccessful)
+            {
+                System.Console.WriteLine("Grid section: " + string.Join(", ", result.Data.Lines.Select(x => x.Start.Lat + ", " + x.Start.Lng + " - " + x.End.Lat + ", " + x.End.Lng)));
+            }
+            else
+            {
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+            }
+        }
+
+        private static void AutosuggestWithCoordinates(What3WordsV3 api, Arguments arg)
+        {
+            var input = arg.GetArgument("--input");
+            var result = api.AutosuggestWithCoordinates(input).RequestAsync().Result;
+            if (result.IsSuccessful)
+            {
+                System.Console.WriteLine("Suggestions: " + string.Join(", ", result.Data.Suggestions.Select(x => x.Words + " (" + x.Coordinates.Lat + ", " + x.Coordinates.Lng + ")")));
+            }
+            else
+            {
+                System.Console.WriteLine(result.Error.Code + " - " + result.Error.Message);
+            }
+        }
+
+        private static void IsPossible3wa(What3WordsV3 api, Arguments arg)
+        {
+            var words = arg.GetArgument("--words");
+            var result = api.IsPossible3wa(words);
+            if (result)
+            {
+                System.Console.WriteLine($"\"{words}\" is possibly a 3 word address");
+            }
+            else
+            {
+                System.Console.WriteLine($"\"{words}\" is not a possible 3 word address");
+            }
+        }
+
+        private static void FindPossible3wa(What3WordsV3 api, Arguments arg)
+        {
+            var words = arg.GetArgument("--words");
+            var result = api.FindPossible3wa(words);
+            if (result.Any())
+            {
+                System.Console.WriteLine("Possible 3 word addresses: " + string.Join(", ", result));
+            }
+            else
+            {
+                System.Console.WriteLine("No possible 3 word addresses found.");
+            }
+        }
+
+        private static void IsValid3wa(What3WordsV3 api, Arguments arg)
+        {
+            var words = arg.GetArgument("--words");
+            var result = api.IsValid3wa(words);
+            if (result)
+            {
+                System.Console.WriteLine($"\"{words}\" is a valid 3 word address");
+            }
+            else
+            {
+                System.Console.WriteLine($"\"{words}\" is not a valid 3 word address");
             }
         }
     }

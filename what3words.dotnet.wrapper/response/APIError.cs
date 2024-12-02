@@ -12,7 +12,7 @@ namespace what3words.dotnet.wrapper.response
         {
             get
             {
-                Enum.TryParse(Code, out What3WordsError error);
+                _ = Enum.TryParse(Code, out What3WordsError error);
                 return error;
             }
         }
